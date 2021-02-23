@@ -1,8 +1,24 @@
 #================================================
+export "PATH=/c/Users/Admin/Downloads/Programs/ReadyLib/dev/arm/gcc-arm-none-eabi-10-2020-q4-major/bin:$PATH"
+#================================================
 export "GPROJECT_ROOT=/c/Users/Admin/Downloads/Programs"
-export "GPROJECT_PATH=${GPROJECT_ROOT}/ReadySTM"
-export "GPROJECT_SRC=${GPROJECT_PATH}/app/code/readyapp/src"
+export "GPROJECT_PATH=$GPROJECT_ROOT/ReadySTM"
+export "GPROJECT_SRC=$GPROJECT_PATH/app/code/readyapp/src"
+#================================================
+export "GLIB_ROOT=/c/Users/Admin/Downloads/Programs/ReadyLib/dev"
+if ! [ -d $GLIB_ROOT ] ; then mkdir -p $GLIB_ROOT ; fi
+#================================================
+export "GSTM_ROOT=$GLIB_ROOT/stm"
+export "GSTM_PATH=$GSTM_ROOT/stm32f103c8t6"
+export "GSTM_URL=https://github.com/ve3wwg/stm32f103c8t6.git"
+export "GOCM_URL=https://github.com/libopencm3/libopencm3.git"
+export "GFRTOS_URL=https://github.com/FreeRTOS/FreeRTOS.git"
+#================================================
+export "GARM_ROOT=$GLIB_ROOT/arm"
+export "GARM_URL=https://developer.arm.com/-/media/Files/downloads/gnu-rm/10-2020q4/gcc-arm-none-eabi-10-2020-q4-major-win32.zip"
+#================================================
+export "GMBK_SRC=/c/Users/Admin/Downloads/Programs/ReadyLib/dev/stm/stm32f103c8t6/miniblink"
 #================================================
 export "GGIT_URL=https://github.com/gkesse/ReadySTM.git"
-export "GGIT_NAME=ReadySTM_2"
+export "GGIT_NAME=ReadySTM"
 #================================================
