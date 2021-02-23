@@ -4,6 +4,7 @@ export "PATH=/c/Users/Admin/Downloads/Programs/ReadyLib/dev/arm/gcc-arm-none-eab
 export "GPROJECT_ROOT=/c/Users/Admin/Downloads/Programs"
 export "GPROJECT_PATH=$GPROJECT_ROOT/ReadySTM"
 export "GPROJECT_SRC=$GPROJECT_PATH/app/code/readyapp/src"
+export "GPROJECT_BIN=rd_stm3"
 #================================================
 export "GLIB_ROOT=/c/Users/Admin/Downloads/Programs/ReadyLib/dev"
 if ! [ -d $GLIB_ROOT ] ; then mkdir -p $GLIB_ROOT ; fi
@@ -11,6 +12,7 @@ if ! [ -d $GLIB_ROOT ] ; then mkdir -p $GLIB_ROOT ; fi
 export "GSTM_ROOT=$GLIB_ROOT/stm"
 export "GSTM_PATH=$GSTM_ROOT/stm32f103c8t6"
 export "GSTM_RTOS=$GSTM_PATH/rtos"
+export "GSTM_PROJECT=$GSTM_RTOS/readyapp"
 export "GSTM_URL=https://github.com/ve3wwg/stm32f103c8t6.git"
 export "GOCM_URL=https://github.com/libopencm3/libopencm3.git"
 export "GFRTOS_URL=https://sourceforge.net/projects/freertos/files/FreeRTOS/V10.0.1/FreeRTOSv10.0.1.zip"

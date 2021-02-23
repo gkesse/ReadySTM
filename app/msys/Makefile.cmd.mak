@@ -1,4 +1,14 @@
 #================================================    
+# project
+prj_build: prj_clean prj_compile
+
+prj_create:
+	cd $(GSTM_RTOS) && make -f $(GSTM_RTOS)/Project.mk PROJECT=$(GPROJECT_SRC)
+prj_compile:
+	cd $(GPROJECT_SRC) && make
+prj_clean:
+	cd $(GPROJECT_SRC) && make clobber
+#================================================    
 # package
 pkg_install:
 	pacman -S unzip --noconfirm --needed
@@ -64,10 +74,6 @@ mbk_flash:
 	cd $(GMBK_SRC) && make flash
 mbk_clean:
 	cd $(GMBK_SRC) && make clobber
-#================================================    
-# project
-prj_create:
-	cd $(GSTM_RTOS) && make -f $(GSTM_RTOS)/Project.mk PROJECT=$(GPROJECT_SRC)
 #================================================    
 # git
 git_status:
