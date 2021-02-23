@@ -1,57 +1,9 @@
-GSRC = $(GPROJECT_SRC)
-GBIN = bin
-GBUILD = build
-GTARGET = $(GBIN)/rdc 
-
-GINCS = \
-    -I$(GSRC)/include \
-    `pkg-config --cflags gtk+-3.0` \
-    `pkg-config --cflags sqlite3` \
-    
-GLIBS = \
-    `pkg-config --libs gtk+-3.0` \
-    `pkg-config --libs sqlite3` \
-
-GOBJS = \
-    $(patsubst $(GSRC)/%.c, $(GBUILD)/%.o, $(wildcard $(GSRC)/*.c)) \
-    $(patsubst $(GSRC)/manager/%.c, $(GBUILD)/%.o, $(wildcard $(GSRC)/manager/*.c)) \
-
-GCFLAGS = \
-    -std=gnu18 \
-    -W -Wall \
-    -Wno-unused-parameter \
-    -Wno-deprecated-declarations \
-
-#================================================    
-all: c_clean_exe c_compile c_run
-all2: c_clean_exe qmake qmake_compile
-#================================================    
-# c    
-c_compile: $(GOBJS)
-	@if ! [ -d $(GBIN) ] ; then mkdir -p $(GBIN) ; fi
-	gcc -o $(GTARGET) $(GOBJS) $(GLIBS) 
-$(GBUILD)/%.o: $(GSRC)/%.c
-	@if ! [ -d $(GBUILD) ] ; then mkdir -p $(GBUILD) ; fi
-	gcc $(GCFLAGS) -c $< -o $@ $(GINCS)
-$(GBUILD)/%.o: $(GSRC)/manager/%.c
-	@if ! [ -d $(GBUILD) ] ; then mkdir -p $(GBUILD) ; fi
-	gcc $(GCFLAGS) -c $< -o $@ $(GINCS)
-c_run:
-	@echo
-	$(GTARGET) $(argv)
-	@echo
-c_clean_exe:
-	@if ! [ -d $(GBIN) ] ; then mkdir -p $(GBIN) ; fi
-	rm -f $(GBIN)/*
-c_clean:
-	@if ! [ -d $(GBIN) ] ; then mkdir -p $(GBIN) ; fi
-	@if ! [ -d $(GBUILD) ] ; then mkdir -p $(GBUILD) ; fi
-	rm -f $(GBUILD)/* $(GBIN)/*
 #================================================    
 # package
 pkg_install:
 	pacman -S unzip --noconfirm --needed
 	pacman -S cmake --noconfirm --needed
+	pacman -S hexcurse --noconfirm --needed
 	pacman -S mingw-w64-i686-libusb --noconfirm --needed
 	pacman -S mingw-w64-i686-stlink --noconfirm --needed
 #================================================    
@@ -61,6 +13,8 @@ stm_download:
 	cd $(GSTM_ROOT) && git clone $(GSTM_URL)
 stm_build:
 	cd $(GSTM_PATH) && make
+stm_clean:
+	cd $(GSTM_PATH) && make clobber
 #================================================    
 # libopencm3
 ocm_download:
@@ -68,7 +22,9 @@ ocm_download:
 #================================================    
 # freertos
 frtos_download:
-	cd $(GSTM_PATH)/rtos && git clone $(GFRTOS_URL)
+	cd $(GSTM_RTOS) && wget $(GFRTOS_URL)
+	cd $(GSTM_RTOS) && unzip *.zip
+	cd $(GSTM_RTOS) && rm -f *.zip
 #================================================    
 # arm
 arm_download:
@@ -78,24 +34,40 @@ arm_download:
 	cd $(GARM_ROOT) && rm -f *.zip
 arm_test:
 	arm-none-eabi-gcc --version
-	type gcc && echo
-	type arm-none-eabi-gcc && echo
+	type gcc
+	type arm-none-eabi-gcc
 #================================================    
 # stlink
 stl_device:
 	st-info --probe
+stl_read:
+	st-flash read ./saved.img 0x8000000 0x1000
+stl_write:
+	st-flash write ./saved.img 0x8000000
 stl_erase:
 	st-flash erase
 #================================================    
+# hexcurse
+hex_check:
+	hexcurse ./saved.img
+#================================================    
 # miniblink
-mbk_all: mbk_clean mbk_compile mbk_flash
+mbk_all: mbk_clean mbk_compile mbk_hex
 
 mbk_compile:
-	cd $(GMBK_SRC) && make && echo
+	cd $(GMBK_SRC) && make
+mbk_hex:
+	cd $(GMBK_SRC) && objcopy -S -O ihex miniblink.elf miniblink.hex
+mbk_check:
+	cd $(GMBK_SRC) && hexcurse miniblink.elf
 mbk_flash:
-	cd $(GMBK_SRC) && make flash && echo
+	cd $(GMBK_SRC) && make flash
 mbk_clean:
-	cd $(GMBK_SRC) && make clobber && echo
+	cd $(GMBK_SRC) && make clobber
+#================================================    
+# project
+prj_create:
+	cd $(GSTM_RTOS) && make -f $(GSTM_RTOS)/Project.mk PROJECT=$(GPROJECT_SRC)
 #================================================    
 # git
 git_status:
