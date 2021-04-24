@@ -6,3 +6,21 @@
 /**/*.pdsbak
 /**/*.ld
 #================================================
+# STM32CubeIDE
+#================================================
+/**/.cproject
+/**/.mxproject
+/**/.project
+/**/*.ioc
+/**/*.pdsprj.*
+/**/.metadata/
+/**/.settings/
+/**/Core/Inc/
+/**/Core/Src/stm32f1xx*
+/**/Core/Src/syscalls*
+/**/Core/Src/sysmem*
+/**/Core/Src/system*
+/**/Core/Startup/
+/**/Debug/
+/**/Drivers/
+#================================================
