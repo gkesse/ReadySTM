@@ -1,4 +1,4 @@
-# ReadySTM
+# ReadySTM32
 
 Bibliothèque de fonctions pour le développement d'applications STM32
 
