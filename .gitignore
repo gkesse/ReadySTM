@@ -8,10 +8,19 @@
 #================================================
 # STM32CubeIDE
 #================================================
+/**/*.ioc
+/**/*.d
+/**/*.o
+/**/*.su
+/**/*.mk
+/**/*.bin
+/**/*.elf
+/**/*.asm
+/**/*.list
+/**/*.map
 /**/.cproject
 /**/.mxproject
 /**/.project
-/**/*.ioc
 /**/*.pdsprj.*
 /**/.metadata/
 /**/.settings/
@@ -21,6 +30,6 @@
 /**/Core/Src/sysmem*
 /**/Core/Src/system*
 /**/Core/Startup/
-/**/Debug/
+/**/Debug/makefile
 /**/Drivers/
 #================================================
